@@ -20,7 +20,7 @@ class VarnishCachePurger extends BaseCachePurger
      */
     public static function displayName(): string
     {
-        return \Craft::t('blitz', 'Varnish Cache purger');
+        return Craft::t('blitz', 'Varnish Cache purger');
     }
 
     /**
@@ -107,7 +107,7 @@ class VarnishCachePurger extends BaseCachePurger
         }
     }
 
-    private function _sendRequest($siteId, $urls = [])
+    private function _sendRequest($siteId, $urls = []): void
     {
         $requests = [];
 
@@ -121,7 +121,7 @@ class VarnishCachePurger extends BaseCachePurger
             }
         }
 
-        $site = \Craft::$app->getSites()->getSiteById($siteId);
+        $site = Craft::$app->getSites()->getSiteById($siteId);
         $client = Craft::createGuzzleClient([
             'base_uri' => $site->getBaseUrl(),
         ]);
@@ -144,7 +144,5 @@ class VarnishCachePurger extends BaseCachePurger
 
         // Initiate the transfers and wait for the pool of requests to complete
         $pool->promise()->wait();
-
-        return $response;
     }
 }
